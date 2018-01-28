@@ -44,7 +44,7 @@ byte colors[3][3] = {  {150,100,0},
                     };
 
 // Helligkeit der ersten Dimm-Stufe
-int colorDiffPercent1 = 55;
+int colorDiffPercent1 = 90;
 
 // pipes[0] = Klingel 
 // pipes[1] = Freie Textnachricht

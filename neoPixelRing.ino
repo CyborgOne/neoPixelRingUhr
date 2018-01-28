@@ -47,12 +47,12 @@ void clearOldPixels(){
  * (weiß)
  */
 void showClockMarker(){
-    ring.setPixelColor(59, 10, 10, 10);
+    ring.setPixelColor(59, 5, 5, 5);
     ring.setPixelColor(0, 70, 70, 70);
-    ring.setPixelColor(1, 10, 10, 10);
+    ring.setPixelColor(1, 5, 5, 5);
     
     for(int i=1;i<=12;i++){
-      ring.setPixelColor((i*5), 5, 5, 5);
+      ring.setPixelColor((i*5), 10, 10, 10);
     }
 }
 

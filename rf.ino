@@ -44,10 +44,7 @@ void checkRf(){
       } 
     } else if ((ClientNummer+1 == 2)) {
         radio.stopListening();
-
-        //if(got_message[0]=="*" && got_message[1]=="*"){
-        //  addNewTextToPipeline(got_message);
-        //}
+        addNewTextToPipeline(got_message);
           
         delay(200);
         radio.startListening();
