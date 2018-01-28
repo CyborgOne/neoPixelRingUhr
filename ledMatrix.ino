@@ -12,7 +12,7 @@ void handleLedMatrix(){
         removeFirstEntryFromPipe();
         delay(10);
       } else {
-        if(bright > 30){
+        if(bright > out[1]){
           showClockTime();
         } else {
           mx.clear();

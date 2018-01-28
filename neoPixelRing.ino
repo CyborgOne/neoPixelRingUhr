@@ -1,6 +1,3 @@
-
-
-
 /*
  * Pixel für aktuelle Zeiger-Markierung setzen
  */
@@ -10,8 +7,11 @@ void setClockPixel(){
     ring.setPixelColor(h+1<60?h+1:h+1-60, c_hour1);
    
     ring.setPixelColor(m, c_minute);
-    
-    ring.setPixelColor(s, c_second);
+     
+    if(bright > out[1]){
+      ring.setPixelColor(s, c_second);
+      secVisible = true;
+    }
 }
 
 
@@ -38,7 +38,10 @@ void clearOldPixels(){
 
     ring.setPixelColor(lastMin, 0, 0, 0);
     
-    ring.setPixelColor(lastSec, 0, 0, 0);
+    if(secVisible){
+      ring.setPixelColor(lastSec, 0, 0, 0);
+      secVisible=false;
+    }
 }
 
 

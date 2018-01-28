@@ -35,7 +35,7 @@
 
 // Settings for NeoPixel brightness
 int out[]  = {1, 30,  100, 180,  255}; 
-int in[]   = {0, 150, 350, 700, 1000};
+int in[]   = {0, 100, 350, 700, 1000};
 
 // 3 Farbwerte (RGB) je Zeiger (Stunde, Minute, Sekunde)
 byte colors[3][3] = {  {150,100,0},
@@ -44,7 +44,7 @@ byte colors[3][3] = {  {150,100,0},
                     };
 
 // Helligkeit der ersten Dimm-Stufe
-int colorDiffPercent1 = 90;
+int colorDiffPercent1 = 80;
 
 // pipes[0] = Klingel 
 // pipes[1] = Freie Textnachricht
@@ -70,6 +70,7 @@ int bright = -1;
 int h = -1;
 int m = -1;
 int s = -1;
+boolean secVisible = false;
 
 char messagePipe[10][BUF_SIZE];
 char lastMessage[BUF_SIZE];
@@ -176,7 +177,9 @@ void loop() {
         char clockTime[10];
         Serial.println("wieder ne Minute rum");
         sprintf(clockTime, " %02i:%02i ", now.hour(), m);
-        addNewTextToPipeline(clockTime); 
+        if(bright > out[1]){        
+          addNewTextToPipeline(clockTime); 
+        }
       }
       
       // remove old hands
