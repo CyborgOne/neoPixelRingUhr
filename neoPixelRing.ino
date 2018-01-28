@@ -33,14 +33,12 @@ void messageAnimation() {
  */
 void clearOldPixels(){
     ring.setPixelColor(lastHour, 0, 0, 0);
-    ring.setPixelColor(lastMin, 0, 0, 0);
-    ring.setPixelColor(lastSec, 0, 0, 0);
-    ring.setPixelColor(lastHour-1, 0, 0, 0);
-    ring.setPixelColor(lastMin-1, 0, 0, 0);
-    ring.setPixelColor(lastSec-1, 0, 0, 0);
     ring.setPixelColor(lastHour+1, 0, 0, 0);
-    ring.setPixelColor(lastMin+1, 0, 0, 0);
-    ring.setPixelColor(lastSec+1, 0, 0, 0);
+    ring.setPixelColor(lastHour-1, 0, 0, 0);
+
+    ring.setPixelColor(lastMin, 0, 0, 0);
+    
+    ring.setPixelColor(lastSec, 0, 0, 0);
 }
 
 
@@ -49,12 +47,12 @@ void clearOldPixels(){
  * (weiß)
  */
 void showClockMarker(){
-    ring.setPixelColor(59, 20, 20, 20);
-    ring.setPixelColor(0, 150, 150, 150);
-    ring.setPixelColor(1, 20, 20, 20);
+    ring.setPixelColor(59, 10, 10, 10);
+    ring.setPixelColor(0, 70, 70, 70);
+    ring.setPixelColor(1, 10, 10, 10);
     
     for(int i=1;i<=12;i++){
-      ring.setPixelColor((i*5), 10, 10, 10);
+      ring.setPixelColor((i*5), 5, 5, 5);
     }
 }
 
@@ -80,7 +78,9 @@ long getSecondColor(){
  * Helligkeit anhand des Sensorwerts regeln
  */
 void refreshBrightness(){
-    sensorWert = analogRead(LIGHT_PIN);
+    Serial.print("Neuer Sensorwert: ");
+    Serial.println(sensorWert);
+    
     bright = multiMap(sensorWert, in, out, 4);
     bright = (round(bright/30)*30)+15;
     ring.setBrightness(bright);
@@ -112,7 +112,7 @@ int getHourPixel(){
 }
 
 int getMinutePixel(){
-  return now.minute()+1;
+  return now.minute();
 }
 
 int getSecondPixel(){

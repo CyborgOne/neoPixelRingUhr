@@ -72,7 +72,7 @@ void setNewText(const char *newMessage){
  */
 void showClockTime(){
   char clockTime[10];
-  sprintf(clockTime, " %02i:%02i ", now.minute()==0?now.hour()+1:now.hour(), m);
+  sprintf(clockTime, " %02i:%02i ", now.hour(), now.minute());
   printText(0, MAX_DEVICES-1, clockTime);
 }
 

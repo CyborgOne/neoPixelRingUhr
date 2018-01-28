@@ -11,7 +11,7 @@
 // Data-Pin for Neo Pixel Ring
 #define PIN 6
 // Pin for Light-Sensor
-#define LIGHT_PIN A0
+#define LIGHT_PIN A3
 
 // Pins for MD_MAX LED Matrix
 #define  CLK_PIN   3
@@ -27,7 +27,7 @@
 // Count of 8x8 Blocks
 #define  MAX_DEVICES 4
 // Delay of the LED Matrix in milliseconds
-#define SCROLL_DELAY  40  
+#define SCROLL_DELAY  30  
 // pixels between characters
 #define  CHAR_SPACING  1 
 // Maximum length of Characters for Textoutput on LED Matrix
@@ -44,16 +44,14 @@ byte colors[3][3] = {  {150,100,0},
                     };
 
 // Helligkeit der ersten Dimm-Stufe
-int colorDiffPercent1 = 75;
-// Helligkeit der zweiten Dimm-Stufe
-int colorDiffPercent2 = 93;
+int colorDiffPercent1 = 55;
 
 // pipes[0] = Klingel 
 // pipes[1] = Freie Textnachricht
 // ... weitere bisher ohne Verwendung
 static const uint64_t pipes[6] = {0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL, 0xF0F0F0F0C3LL, 0xF0F0F0F0B4LL, 0xF0F0F0F0A5LL, 0xF0F0F0F096LL};
 
-static uint32_t keyDelay = 300;
+static uint32_t keyDelay = 150;
 
 /* ****************************************************
  *                 ENDE CONFIGURATION
@@ -62,9 +60,7 @@ static uint32_t keyDelay = 300;
 
 long c_hour   = -1;
 long c_hour1   = -1;
-long c_hour2   = -1;
 long c_minute = -1;
-long c_minute1 = -1;
 long c_second = -1;
 int lastSec = -1;
 int lastMin = -1;
@@ -106,7 +102,9 @@ void setup() {
 
   pinMode(SET_CLOCK_HOUR_PIN, INPUT);
   pinMode(SET_CLOCK_MINUTE_PIN, INPUT);
-  
+
+  pinMode(LIGHT_PIN, INPUT);
+
   for(int i=0;i<10;i++){
     strcpy(messagePipe[i],"");
   }
@@ -136,11 +134,9 @@ void setup() {
   // Calculate Colors for hourhand
   c_hour    = ring.Color(colors[0][0],colors[0][1],colors[0][2]);
   c_hour1   = ring.Color(darker(colors[0][0],colorDiffPercent1),darker(colors[0][1],colorDiffPercent1),darker(colors[0][2],colorDiffPercent1));
-  c_hour2   = ring.Color(darker(colors[0][0],colorDiffPercent2),darker(colors[0][1],colorDiffPercent2),darker(colors[0][2],colorDiffPercent2));
   
   // Calculate Colors for minutehand
   c_minute  = ring.Color(colors[1][0],colors[1][1],colors[1][2]);
-  c_minute1 = ring.Color(darker(colors[1][0],colorDiffPercent1),darker(colors[1][1],colorDiffPercent1),darker(colors[1][2],colorDiffPercent1));
   
   // Calculate Colors for secondhand
   c_second  = ring.Color(colors[2][0],colors[2][1],colors[2][2]);
@@ -155,7 +151,10 @@ void setup() {
 void loop() {  
     // refresh current Time
     now = rtc.now();
+    delay(20);
     
+    sensorWert = analogRead(LIGHT_PIN);
+
     checkClockButtons();
 
     checkRf();

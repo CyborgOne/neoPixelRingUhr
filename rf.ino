@@ -29,11 +29,11 @@ void checkRf(){
   if (radio.available(&ClientNummer)){
     radio.read(&got_message, sizeof(got_message));
 
-    Serial.println();
-    Serial.print("ClientNummer: ");
-    Serial.println(ClientNummer+1);
-    Serial.print("Wert: ");
-    Serial.println(got_message);
+//    Serial.println();
+//    Serial.print("ClientNummer: ");
+//    Serial.println(ClientNummer+1);
+//    Serial.print("Wert: ");
+//    Serial.println(got_message);
     
     if ((ClientNummer+1 == 1)) {       // Klingel
       if(strcmp(got_message, signalOn) == 0){
@@ -44,7 +44,11 @@ void checkRf(){
       } 
     } else if ((ClientNummer+1 == 2)) {
         radio.stopListening();
-        addNewTextToPipeline(got_message);
+
+        //if(got_message[0]=="*" && got_message[1]=="*"){
+        //  addNewTextToPipeline(got_message);
+        //}
+          
         delay(200);
         radio.startListening();
     }
